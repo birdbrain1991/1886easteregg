@@ -500,5 +500,59 @@ try {
 
 } catch(e) { console.error(e); }
 </script>
+
+<div id="panel" style="
+  position:fixed;
+  bottom:0; left:0; right:0;
+  z-index:100;
+  padding: 22px 40px 28px;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 60%, transparent);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  pointer-events:none;
+">
+  <div style="
+    font-family: 'Impact', 'Arial Narrow', sans-serif;
+    font-size: clamp(13px, 1.8vw, 20px);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: rgba(220,185,110,0.92);
+    font-weight:400;
+  ">Days Until God Arrives</div>
+  <div id="timer" style="
+    font-family: 'Impact', 'Arial Narrow', sans-serif;
+    font-size: clamp(32px, 6vw, 72px);
+    letter-spacing: 4px;
+    color: rgba(220,185,110,0.92);
+    font-weight:400;
+    text-shadow: 0 0 30px rgba(180,80,255,0.4), 0 0 60px rgba(180,80,255,0.15);
+  ">—</div>
+</div>
+
+<script>
+(function() {
+  var target = new Date('2027-03-15T00:00:00');
+  function update() {
+    var now = new Date();
+    var diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('timer').textContent = 'GOD HAS ARRIVED';
+      return;
+    }
+    var days  = Math.floor(diff / (1000*60*60*24));
+    var hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    var mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
+    var secs  = Math.floor((diff % (1000*60)) / 1000);
+    var pad = function(n) { return n < 10 ? '0'+n : ''+n; };
+    document.getElementById('timer').textContent =
+      days + 'd  ' + pad(hours) + 'h  ' + pad(mins) + 'm  ' + pad(secs) + 's';
+  }
+  update();
+  setInterval(update, 1000);
+})();
+</script>
+
 </body>
 </html>
